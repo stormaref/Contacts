@@ -24,4 +24,5 @@ public class StaticTools {
     public static void ToastMaker(Context context, String text) {
         Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
+
 }
