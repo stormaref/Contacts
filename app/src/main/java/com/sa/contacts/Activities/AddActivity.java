@@ -40,25 +40,19 @@ public class AddActivity extends AppCompatActivity {
         final EditText wMailTxt = findViewById(R.id.wMailTxt);
         final EditText addressTxt = findViewById(R.id.addressTxt);
         final EditText WebTxt = findViewById(R.id.WebTxt);
-        AddBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Contact contact = new Contact(fnameTxt.getText().toString(), lnameTxt.getText().toString(),
-                        addressTxt.getText().toString(), WebTxt.getText().toString(), mobileTxt.getText().toString(),
-                        homeTxt.getText().toString(), workTxt.getText().toString(), hMailTxt.getText().toString(), wMailTxt.getText().toString(), bytes);
-                contact.save();
-                StaticTools.ToastMaker(AddActivity.this, "Successfully added");
-                AddActivity.super.onBackPressed();
-            }
+        AddBtn.setOnClickListener(v -> {
+            Contact contact = new Contact(fnameTxt.getText().toString(), lnameTxt.getText().toString(),
+                    addressTxt.getText().toString(), WebTxt.getText().toString(), mobileTxt.getText().toString(),
+                    homeTxt.getText().toString(), workTxt.getText().toString(), hMailTxt.getText().toString(), wMailTxt.getText().toString(), bytes);
+            contact.save();
+            StaticTools.ToastMaker(AddActivity.this, "Successfully added");
+            AddActivity.super.onBackPressed();
         });
 
-        AddImageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
-            }
+        AddImageBtn.setOnClickListener(v -> {
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
         });
     }
 

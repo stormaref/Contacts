@@ -24,14 +24,12 @@ public class MainActivity extends AppCompatActivity {
         Button ContactsBtn = findViewById(R.id.ContactsBtn);
         Button FavBtn = findViewById(R.id.FavBtn);
         final Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        final List<Contact> contacts = Contact.listAll(Contact.class);
-        Collections.sort(contacts, (f1, f2) -> f1.toString().compareTo(f2.toString()));
         ContactsBtn.setOnClickListener(v -> {
-            ListActivity.contacts = contacts;
+            intent.putExtra("code", 1);
             startActivity(intent);
         });
         FavBtn.setOnClickListener(v -> {
-            ListActivity.contacts = contacts.stream().filter(Contact::isFav).collect(Collectors.toList());
+            intent.putExtra("code", 2);
             startActivity(intent);
         });
     }

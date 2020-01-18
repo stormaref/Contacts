@@ -12,11 +12,11 @@ import com.sa.contacts.Contact;
 import com.sa.contacts.DataAdapter;
 import com.sa.contacts.R;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ListActivity extends AppCompatActivity {
-
-    public static List<Contact> contacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +29,14 @@ public class ListActivity extends AppCompatActivity {
             Intent intent = new Intent(ListActivity.this, AddActivity.class);
             startActivity(intent);
         });
-        listView.setAdapter(new DataAdapter(ListActivity.this, contacts));
+        List<Contact> contacts = Contact.listAll(Contact.class);
+        Collections.sort(contacts, (f1, f2) -> f1.toString().compareTo(f2.toString()));
+        List<Contact> tmpList;
+        if (getIntent().getIntExtra("code", -1) == 1) {
+            tmpList = Contact.listAll(Contact.class);
+        } else {
+            tmpList = contacts.stream().filter(Contact::isFav).collect(Collectors.toList());
+        }
+        listView.setAdapter(new DataAdapter(ListActivity.this, tmpList));
     }
 }
