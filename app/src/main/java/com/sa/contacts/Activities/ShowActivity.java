@@ -50,6 +50,7 @@ public class ShowActivity extends AppCompatActivity {
         Button BlockBtn = findViewById(R.id.AddBlockBtn);
         Button FavBtn = findViewById(R.id.addFavBtn);
         Button CallBtn = findViewById(R.id.CallBtn);
+        Button ShareBtn = findViewById(R.id.shareBtn);
 
         BlockBtn.setOnClickListener(v -> {
             if (contact.isBlocked()) {
@@ -79,6 +80,10 @@ public class ShowActivity extends AppCompatActivity {
             }
         });
 
+        ShareBtn.setOnClickListener(v -> {
+            Share(String.format("%s %s", contact.getFirstName(), contact.getLastName()), contact.getMobile());
+        });
+
         CallBtn.setOnClickListener(v -> {
             Intent callIntent = new Intent(Intent.ACTION_CALL);
             callIntent.setData(Uri.parse("tel:" + contact.getMobile()));
@@ -99,5 +104,13 @@ public class ShowActivity extends AppCompatActivity {
         WMail.setText(contact.getWorkMail());
         Work.setText(contact.getWork());
         imageView.setImageBitmap(StaticTools.GetImageFromBytes(contact.getImage(), 100, 100));
+    }
+
+    public void Share(String Name, String Number) {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, Name);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Number);
+        startActivity(Intent.createChooser(sharingIntent, "Share using:"));
     }
 }
