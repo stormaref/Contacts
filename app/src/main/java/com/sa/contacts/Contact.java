@@ -3,17 +3,18 @@ package com.sa.contacts;
 import com.orm.SugarRecord;
 
 public class Contact extends SugarRecord {
-    String FirstName;
-    String LastName;
-    String Address;
-    String Website;
-    String Mobile;
-    String Home;
-    String Work;
-    String HomeMail;
-    String WorkMail;
-    byte[] Image;
-    boolean isfav;
+    private String FirstName;
+    private String LastName;
+    private String Address;
+    private String Website;
+    private String Mobile;
+    private String Home;
+    private String Work;
+    private String HomeMail;
+    private String WorkMail;
+    private byte[] Image;
+    private boolean isFav;
+    private boolean isBlocked;
 
     public Contact() {
     }
@@ -29,15 +30,24 @@ public class Contact extends SugarRecord {
         HomeMail = homeMail;
         WorkMail = workMail;
         Image = image;
-        isfav = false;
+        isFav = false;
+        isBlocked = false;
     }
 
-    public void setFav() {
-        this.isfav = true;
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setFav(boolean fav) {
+        isFav = fav;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 
     public boolean isFav() {
-        return isfav;
+        return isFav;
     }
 
     public String getFirstName() {

@@ -5,9 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,12 +23,22 @@ import java.io.InputStream;
 public class AddActivity extends AppCompatActivity {
     byte[] bytes = null;
     private static final int RESULT_LOAD_IMG = 2;
+    ImageView imageView;
+    int code;
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AddActivity.this, ListActivity.class);
+        intent.putExtra("code", code);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SugarContext.init(this);
         setContentView(R.layout.activity_add);
+        code = getIntent().getIntExtra("code", -1);
         Button AddBtn = findViewById(R.id.AddBtn);
         Button AddImageBtn = findViewById(R.id.addImageBtn);
         final EditText fnameTxt = findViewById(R.id.fnameTxt);
@@ -40,13 +50,18 @@ public class AddActivity extends AppCompatActivity {
         final EditText wMailTxt = findViewById(R.id.wMailTxt);
         final EditText addressTxt = findViewById(R.id.addressTxt);
         final EditText WebTxt = findViewById(R.id.WebTxt);
+        imageView = findViewById(R.id.imageView);
+
         AddBtn.setOnClickListener(v -> {
             Contact contact = new Contact(fnameTxt.getText().toString(), lnameTxt.getText().toString(),
                     addressTxt.getText().toString(), WebTxt.getText().toString(), mobileTxt.getText().toString(),
                     homeTxt.getText().toString(), workTxt.getText().toString(), hMailTxt.getText().toString(), wMailTxt.getText().toString(), bytes);
+            contact.setFav(code == 2);
             contact.save();
             StaticTools.ToastMaker(AddActivity.this, "Successfully added");
-            AddActivity.super.onBackPressed();
+            Intent intent = new Intent(AddActivity.this, ListActivity.class);
+            intent.putExtra("code", 1);
+            this.startActivity(intent);
         });
 
         AddImageBtn.setOnClickListener(v -> {
@@ -64,7 +79,8 @@ public class AddActivity extends AppCompatActivity {
                 final Uri imageUri = data.getData();
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                bytes = StaticTools.GetBytesFromImage(selectedImage, 100);
+                bytes = StaticTools.GetBytesFromImage(selectedImage, 10);
+                imageView.setImageBitmap(selectedImage);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 StaticTools.ToastMaker(AddActivity.this, "Something went wrong");

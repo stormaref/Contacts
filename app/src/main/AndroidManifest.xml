@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sa.contacts">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="DATABASE"
+            android:value="DB.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.sa.contacts" />
+
+
         <activity
             android:name=".Activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -17,13 +34,18 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Activities.AddActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Activities.ListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.ShowActivity" />
+
+        <activity
+            android:name=".Activities.ShowActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 

@@ -19,24 +19,31 @@ import java.util.stream.Collectors;
 public class ListActivity extends AppCompatActivity {
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ListActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SugarContext.init(this);
+        int code = getIntent().getIntExtra("code", -1);
         setContentView(R.layout.activity_list);
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         ListView listView = findViewById(R.id.list);
         fab.setOnClickListener(v -> {
             Intent intent = new Intent(ListActivity.this, AddActivity.class);
+            intent.putExtra("code", code);
             startActivity(intent);
         });
         List<Contact> contacts = Contact.listAll(Contact.class);
         Collections.sort(contacts, (f1, f2) -> f1.toString().compareTo(f2.toString()));
-        List<Contact> tmpList;
-        if (getIntent().getIntExtra("code", -1) == 1) {
-            tmpList = Contact.listAll(Contact.class);
+        if (code == 1) {
+            listView.setAdapter(new DataAdapter(ListActivity.this, contacts));
         } else {
-            tmpList = contacts.stream().filter(Contact::isFav).collect(Collectors.toList());
+           List<Contact> tmpList = contacts.stream().filter(Contact::isFav).collect(Collectors.toList());
+            listView.setAdapter(new DataAdapter(ListActivity.this, tmpList));
         }
-        listView.setAdapter(new DataAdapter(ListActivity.this, tmpList));
     }
 }

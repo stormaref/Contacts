@@ -36,7 +36,7 @@ public class DataAdapter extends ArrayAdapter<Contact> {
             intent.putExtra("id", contact.getId());
             context.startActivity(intent);
         });
-        name.setText(String.format("%s %s", contact.FirstName, contact.LastName));
+        name.setText(String.format("%s %s", contact.getFirstName(), contact.getLastName()));
         return convertView;
     }
 }
