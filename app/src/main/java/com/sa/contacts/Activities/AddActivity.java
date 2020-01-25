@@ -50,12 +50,13 @@ public class AddActivity extends AppCompatActivity {
         final EditText wMailTxt = findViewById(R.id.wMailTxt);
         final EditText addressTxt = findViewById(R.id.addressTxt);
         final EditText WebTxt = findViewById(R.id.WebTxt);
+        final EditText birthTxt = findViewById(R.id.birthTxt);
         imageView = findViewById(R.id.imageView);
 
         AddBtn.setOnClickListener(v -> {
             Contact contact = new Contact(fnameTxt.getText().toString(), lnameTxt.getText().toString(),
                     addressTxt.getText().toString(), WebTxt.getText().toString(), mobileTxt.getText().toString(),
-                    homeTxt.getText().toString(), workTxt.getText().toString(), hMailTxt.getText().toString(), wMailTxt.getText().toString(), bytes);
+                    homeTxt.getText().toString(), workTxt.getText().toString(), hMailTxt.getText().toString(), wMailTxt.getText().toString(),birthTxt.getText().toString(), bytes);
             contact.setFav(code == 2);
             contact.save();
             StaticTools.ToastMaker(AddActivity.this, "Successfully added");

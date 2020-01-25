@@ -12,6 +12,7 @@ public class Contact extends SugarRecord {
     private String Work;
     private String HomeMail;
     private String WorkMail;
+    private String BirthDate;
     private byte[] Image;
     private boolean isFav;
     private boolean isBlocked;
@@ -19,7 +20,7 @@ public class Contact extends SugarRecord {
     public Contact() {
     }
 
-    public Contact(String firstName, String lastName, String address, String website, String mobile, String home, String work, String homeMail, String workMail, byte[] image) {
+    public Contact(String firstName, String lastName, String address, String website, String mobile, String home, String work, String homeMail, String workMail, String birthDate, byte[] image) {
         FirstName = firstName;
         LastName = lastName;
         Address = address;
@@ -29,6 +30,7 @@ public class Contact extends SugarRecord {
         Work = work;
         HomeMail = homeMail;
         WorkMail = workMail;
+        BirthDate = birthDate;
         Image = image;
         isFav = false;
         isBlocked = false;
@@ -88,5 +90,9 @@ public class Contact extends SugarRecord {
 
     public byte[] getImage() {
         return Image;
+    }
+
+    public String getBirthDate() {
+        return BirthDate;
     }
 }

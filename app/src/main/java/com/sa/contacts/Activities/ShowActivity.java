@@ -46,20 +46,29 @@ public class ShowActivity extends AppCompatActivity {
         TextView Website = findViewById(R.id.showweb);
         TextView WMail = findViewById(R.id.showwmail);
         TextView Work = findViewById(R.id.showwork);
+        TextView Birth = findViewById(R.id.showbirth);
         ImageView imageView = findViewById(R.id.showimage);
         Button BlockBtn = findViewById(R.id.AddBlockBtn);
         Button FavBtn = findViewById(R.id.addFavBtn);
         Button CallBtn = findViewById(R.id.CallBtn);
         Button ShareBtn = findViewById(R.id.shareBtn);
+        Button DeleteBtn = findViewById(R.id.deleteBtn);
+
+        DeleteBtn.setOnClickListener(v -> {
+            contact.delete();
+            Intent intent = new Intent(ShowActivity.this, ListActivity.class);
+            intent.putExtra("code", 1);
+            startActivity(intent);
+        });
 
         BlockBtn.setOnClickListener(v -> {
             if (contact.isBlocked()) {
-                BlockBtn.setText("Unblock");
+                BlockBtn.setText("Block");
                 contact.setBlocked(false);
                 contact.update();
                 StaticTools.ToastMaker(ShowActivity.this, "Contact unblocked");
             } else {
-                BlockBtn.setText("Block");
+                BlockBtn.setText("Unblock");
                 contact.setBlocked(true);
                 contact.update();
                 StaticTools.ToastMaker(ShowActivity.this, "Contact blocked");
@@ -68,12 +77,12 @@ public class ShowActivity extends AppCompatActivity {
 
         FavBtn.setOnClickListener(v -> {
             if (contact.isFav()) {
-                BlockBtn.setText("UnFav");
+                FavBtn.setText("Fav");
                 contact.setFav(false);
                 contact.update();
                 StaticTools.ToastMaker(ShowActivity.this, "Contact removed from fav");
             } else {
-                BlockBtn.setText("Fav");
+                FavBtn.setText("Unfav");
                 contact.setFav(true);
                 contact.update();
                 StaticTools.ToastMaker(ShowActivity.this, "Contact added to fav");
@@ -103,6 +112,7 @@ public class ShowActivity extends AppCompatActivity {
         Website.setText(contact.getWebsite());
         WMail.setText(contact.getWorkMail());
         Work.setText(contact.getWork());
+        Birth.setText(contact.getBirthDate());
         imageView.setImageBitmap(StaticTools.GetImageFromBytes(contact.getImage(), 100, 100));
     }
 
