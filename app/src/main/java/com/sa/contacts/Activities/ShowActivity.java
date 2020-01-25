@@ -19,6 +19,8 @@ import com.sa.contacts.Contact;
 import com.sa.contacts.R;
 import com.sa.contacts.StaticTools;
 
+import java.util.List;
+
 public class ShowActivity extends AppCompatActivity {
     private static final int REQUEST_PHONE_CALL = 1;
 
@@ -65,26 +67,34 @@ public class ShowActivity extends AppCompatActivity {
             if (contact.isBlocked()) {
                 BlockBtn.setText("Block");
                 contact.setBlocked(false);
-                contact.update();
+                contact.save();
                 StaticTools.ToastMaker(ShowActivity.this, "Contact unblocked");
             } else {
                 BlockBtn.setText("Unblock");
                 contact.setBlocked(true);
-                contact.update();
+                contact.save();
                 StaticTools.ToastMaker(ShowActivity.this, "Contact blocked");
             }
         });
+
+        if (contact.isFav()) FavBtn.setText("Unfav");
+        else FavBtn.setText("Fav");
+
+        if (contact.isBlocked()) BlockBtn.setText("Unblock");
+        else BlockBtn.setText("Block");
 
         FavBtn.setOnClickListener(v -> {
             if (contact.isFav()) {
                 FavBtn.setText("Fav");
                 contact.setFav(false);
-                contact.update();
+                contact.save();
+                List<Contact> contacts = Contact.listAll(Contact.class);
                 StaticTools.ToastMaker(ShowActivity.this, "Contact removed from fav");
             } else {
                 FavBtn.setText("Unfav");
                 contact.setFav(true);
-                contact.update();
+                contact.save();
+                List<Contact> contacts = Contact.listAll(Contact.class);
                 StaticTools.ToastMaker(ShowActivity.this, "Contact added to fav");
             }
         });

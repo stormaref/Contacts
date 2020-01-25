@@ -80,7 +80,7 @@ public class AddActivity extends AppCompatActivity {
                 final Uri imageUri = data.getData();
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                bytes = StaticTools.GetBytesFromImage(selectedImage, 10);
+                bytes = StaticTools.GetBytesFromImage(selectedImage, 1);
                 imageView.setImageBitmap(selectedImage);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
